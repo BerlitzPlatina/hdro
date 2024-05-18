@@ -72,7 +72,7 @@ dkms.conf
 # Fortran module files
 *.mod
 *.smod
-
+./build
 # Compiled Static libraries
 *.lai
 
