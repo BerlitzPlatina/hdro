@@ -5,7 +5,7 @@ using namespace drogon;
 
 class WebSocketChat : public drogon::WebSocketController<WebSocketChat>
 {
-  public:
+public:
     virtual void handleNewMessage(const WebSocketConnectionPtr &,
                                   std::string &&,
                                   const WebSocketMessageType &) override;
@@ -16,7 +16,7 @@ class WebSocketChat : public drogon::WebSocketController<WebSocketChat>
     WS_PATH_LIST_BEGIN
     WS_PATH_ADD("/chat", Get);
     WS_PATH_LIST_END
-  private:
+private:
     PubSubService<std::string> chatRooms_;
 };
 
@@ -59,7 +59,8 @@ void WebSocketChat::handleNewConnection(const HttpRequestPtr &req,
     s.chatRoomName_ = req->getParameter("room_name");
     s.id_ = chatRooms_.subscribe(s.chatRoomName_,
                                  [conn](const std::string &topic,
-                                        const std::string &message) {
+                                        const std::string &message)
+                                 {
                                      // Supress unused variable warning
                                      (void)topic;
                                      conn->send(message);
