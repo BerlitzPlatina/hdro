@@ -1,5 +1,9 @@
 #!/bin/bash
-
+#first
+# cd build
+# cmake ..
+# make
+# cd ../
 # Build the project using CMake
 cmake --build build
 

@@ -1,22 +1,19 @@
-#include <drogon/WebSocketController.h>
-#include <drogon/PubSubService.h>
 #include <drogon/HttpAppFramework.h>
+#include <drogon/PubSubService.h>
+#include <drogon/WebSocketController.h>
 using namespace drogon;
 
 class WebSocketChat : public drogon::WebSocketController<WebSocketChat>
 {
-public:
-    virtual void handleNewMessage(const WebSocketConnectionPtr &,
-                                  std::string &&,
+  public:
+    virtual void handleNewMessage(const WebSocketConnectionPtr &, std::string &&,
                                   const WebSocketMessageType &) override;
-    virtual void handleConnectionClosed(
-        const WebSocketConnectionPtr &) override;
-    virtual void handleNewConnection(const HttpRequestPtr &,
-                                     const WebSocketConnectionPtr &) override;
+    virtual void handleConnectionClosed(const WebSocketConnectionPtr &) override;
+    virtual void handleNewConnection(const HttpRequestPtr &, const WebSocketConnectionPtr &) override;
     WS_PATH_LIST_BEGIN
     WS_PATH_ADD("/chat", Get);
     WS_PATH_LIST_END
-private:
+  private:
     PubSubService<std::string> chatRooms_;
 };
 
@@ -26,8 +23,7 @@ struct Subscriber
     drogon::SubscriberID id_;
 };
 
-void WebSocketChat::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr,
-                                     std::string &&message,
+void WebSocketChat::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr, std::string &&message,
                                      const WebSocketMessageType &type)
 {
     // write your application logic here
@@ -50,25 +46,23 @@ void WebSocketChat::handleConnectionClosed(const WebSocketConnectionPtr &conn)
     chatRooms_.unsubscribe(s.chatRoomName_, s.id_);
 }
 
-void WebSocketChat::handleNewConnection(const HttpRequestPtr &req,
-                                        const WebSocketConnectionPtr &conn)
+void WebSocketChat::handleNewConnection(const HttpRequestPtr &req, const WebSocketConnectionPtr &conn)
 {
     LOG_DEBUG << "new websocket connection!";
     conn->send("haha!!!");
     Subscriber s;
     s.chatRoomName_ = req->getParameter("room_name");
-    s.id_ = chatRooms_.subscribe(s.chatRoomName_,
-                                 [conn](const std::string &topic,
-                                        const std::string &message)
-                                 {
-                                     // Supress unused variable warning
-                                     (void)topic;
-                                     conn->send(message);
-                                 });
+    s.id_ = chatRooms_.subscribe(s.chatRoomName_, [conn](const std::string &topic, const std::string &message) {
+        // Supress unused variable warning
+        (void)topic;
+        conn->send(message);
+    });
     conn->setContext(std::make_shared<Subscriber>(std::move(s)));
 }
 
 int main()
 {
-    app().addListener("127.0.0.1", 8848).run();
+    // Load config file
+    drogon::app().loadConfigFile("config.json");
+    app().run();
 }
