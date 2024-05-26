@@ -5,6 +5,10 @@
 # make
 # cd ../
 # Build the project using CMake
+# cd build
+# cmake ..
+# make
+# cd ../
 cmake --build build
 
 # Check if the build was successful
