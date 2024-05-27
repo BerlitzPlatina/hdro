@@ -5,7 +5,7 @@
  *
  */
 
-#include "drowave_v1_Users.h"
+#include "user/drowave_v1_Users.h"
 #include <string>
 
 using namespace drowave::v1;
