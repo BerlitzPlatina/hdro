@@ -252,6 +252,8 @@ nunit-*.xml
 [Dd]ebugPS/
 [Rr]eleasePS/
 dlldata.c
+config.json
+config.yaml
 
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
