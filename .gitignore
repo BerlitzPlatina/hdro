@@ -254,6 +254,7 @@ nunit-*.xml
 dlldata.c
 config.json
 config.yaml
+models/model.json
 
 # Benchmark Results
 BenchmarkDotNet.Artifacts/
