@@ -16,4 +16,5 @@ class WebSocketChat : public drogon::WebSocketController<WebSocketChat>
     WS_PATH_LIST_END
   private:
     PubSubService<std::string> chatRooms_;
+    void test();
 };

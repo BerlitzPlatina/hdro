@@ -24,9 +24,14 @@ void WebSocketChat::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr, st
 
 void WebSocketChat::handleConnectionClosed(const WebSocketConnectionPtr &conn)
 {
-    LOG_DEBUG << "websocket closed!";
+    this->test();
     auto &s = conn->getContextRef<Subscriber>();
     chatRooms_.unsubscribe(s.chatRoomName_, s.id_);
+}
+
+void WebSocketChat::test()
+{
+    LOG_DEBUG << "websocket closed!aaaaaaaaaaaaaaaaaaa";
 }
 
 void WebSocketChat::handleNewConnection(const HttpRequestPtr &req, const WebSocketConnectionPtr &conn)
