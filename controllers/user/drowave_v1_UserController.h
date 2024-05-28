@@ -8,9 +8,11 @@
 #pragma once
 
 #include "../../models/Users.h"
+// #include "./models/Users.h"
 #include <drogon/HttpController.h>
 
 using namespace drogon;
+using namespace drogon_model::dro;
 
 namespace drowave
 {
