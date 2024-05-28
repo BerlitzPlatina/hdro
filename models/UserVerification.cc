@@ -13,7 +13,7 @@ using namespace drogon;
 using namespace drogon::orm;
 using namespace drogon_model::dro;
 
-const std::string UserVerification::Cols::_users_id = "users_id";
+const std::string UserVerification::Cols::_user_id = "user_id";
 const std::string UserVerification::Cols::_verification_code = "verification_code";
 const std::string UserVerification::Cols::_created_at = "created_at";
 const std::string UserVerification::primaryKeyName = "";
@@ -21,7 +21,7 @@ const bool UserVerification::hasPrimaryKey = false;
 const std::string UserVerification::tableName = "user_verification";
 
 const std::vector<typename UserVerification::MetaData> UserVerification::metaData_={
-{"users_id","int32_t","int",4,0,0,1},
+{"user_id","int32_t","int",4,0,0,1},
 {"verification_code","std::string","varchar(45)",45,0,0,1},
 {"created_at","std::string","varchar(45)",45,0,0,1}
 };
@@ -34,9 +34,9 @@ UserVerification::UserVerification(const Row &r, const ssize_t indexOffset) noex
 {
     if(indexOffset < 0)
     {
-        if(!r["users_id"].isNull())
+        if(!r["user_id"].isNull())
         {
-            usersId_=std::make_shared<int32_t>(r["users_id"].as<int32_t>());
+            userId_=std::make_shared<int32_t>(r["user_id"].as<int32_t>());
         }
         if(!r["verification_code"].isNull())
         {
@@ -59,7 +59,7 @@ UserVerification::UserVerification(const Row &r, const ssize_t indexOffset) noex
         index = offset + 0;
         if(!r[index].isNull())
         {
-            usersId_=std::make_shared<int32_t>(r[index].as<int32_t>());
+            userId_=std::make_shared<int32_t>(r[index].as<int32_t>());
         }
         index = offset + 1;
         if(!r[index].isNull())
@@ -87,7 +87,7 @@ UserVerification::UserVerification(const Json::Value &pJson, const std::vector<s
         dirtyFlag_[0] = true;
         if(!pJson[pMasqueradingVector[0]].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[0]].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[0]].asInt64());
         }
     }
     if(!pMasqueradingVector[1].empty() && pJson.isMember(pMasqueradingVector[1]))
@@ -110,12 +110,12 @@ UserVerification::UserVerification(const Json::Value &pJson, const std::vector<s
 
 UserVerification::UserVerification(const Json::Value &pJson) noexcept(false)
 {
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
         dirtyFlag_[0]=true;
-        if(!pJson["users_id"].isNull())
+        if(!pJson["user_id"].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson["users_id"].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson["user_id"].asInt64());
         }
     }
     if(pJson.isMember("verification_code"))
@@ -149,7 +149,7 @@ void UserVerification::updateByMasqueradedJson(const Json::Value &pJson,
         dirtyFlag_[0] = true;
         if(!pJson[pMasqueradingVector[0]].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[0]].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[0]].asInt64());
         }
     }
     if(!pMasqueradingVector[1].empty() && pJson.isMember(pMasqueradingVector[1]))
@@ -172,12 +172,12 @@ void UserVerification::updateByMasqueradedJson(const Json::Value &pJson,
 
 void UserVerification::updateByJson(const Json::Value &pJson) noexcept(false)
 {
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
         dirtyFlag_[0] = true;
-        if(!pJson["users_id"].isNull())
+        if(!pJson["user_id"].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson["users_id"].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson["user_id"].asInt64());
         }
     }
     if(pJson.isMember("verification_code"))
@@ -198,20 +198,20 @@ void UserVerification::updateByJson(const Json::Value &pJson) noexcept(false)
     }
 }
 
-const int32_t &UserVerification::getValueOfUsersId() const noexcept
+const int32_t &UserVerification::getValueOfUserId() const noexcept
 {
     static const int32_t defaultValue = int32_t();
-    if(usersId_)
-        return *usersId_;
+    if(userId_)
+        return *userId_;
     return defaultValue;
 }
-const std::shared_ptr<int32_t> &UserVerification::getUsersId() const noexcept
+const std::shared_ptr<int32_t> &UserVerification::getUserId() const noexcept
 {
-    return usersId_;
+    return userId_;
 }
-void UserVerification::setUsersId(const int32_t &pUsersId) noexcept
+void UserVerification::setUserId(const int32_t &pUserId) noexcept
 {
-    usersId_ = std::make_shared<int32_t>(pUsersId);
+    userId_ = std::make_shared<int32_t>(pUserId);
     dirtyFlag_[0] = true;
 }
 
@@ -266,7 +266,7 @@ void UserVerification::updateId(const uint64_t id)
 const std::vector<std::string> &UserVerification::insertColumns() noexcept
 {
     static const std::vector<std::string> inCols={
-        "users_id",
+        "user_id",
         "verification_code",
         "created_at"
     };
@@ -277,9 +277,9 @@ void UserVerification::outputArgs(drogon::orm::internal::SqlBinder &binder) cons
 {
     if(dirtyFlag_[0])
     {
-        if(getUsersId())
+        if(getUserId())
         {
-            binder << getValueOfUsersId();
+            binder << getValueOfUserId();
         }
         else
         {
@@ -332,9 +332,9 @@ void UserVerification::updateArgs(drogon::orm::internal::SqlBinder &binder) cons
 {
     if(dirtyFlag_[0])
     {
-        if(getUsersId())
+        if(getUserId())
         {
-            binder << getValueOfUsersId();
+            binder << getValueOfUserId();
         }
         else
         {
@@ -367,13 +367,13 @@ void UserVerification::updateArgs(drogon::orm::internal::SqlBinder &binder) cons
 Json::Value UserVerification::toJson() const
 {
     Json::Value ret;
-    if(getUsersId())
+    if(getUserId())
     {
-        ret["users_id"]=getValueOfUsersId();
+        ret["user_id"]=getValueOfUserId();
     }
     else
     {
-        ret["users_id"]=Json::Value();
+        ret["user_id"]=Json::Value();
     }
     if(getVerificationCode())
     {
@@ -402,9 +402,9 @@ Json::Value UserVerification::toMasqueradedJson(
     {
         if(!pMasqueradingVector[0].empty())
         {
-            if(getUsersId())
+            if(getUserId())
             {
-                ret[pMasqueradingVector[0]]=getValueOfUsersId();
+                ret[pMasqueradingVector[0]]=getValueOfUserId();
             }
             else
             {
@@ -436,13 +436,13 @@ Json::Value UserVerification::toMasqueradedJson(
         return ret;
     }
     LOG_ERROR << "Masquerade failed";
-    if(getUsersId())
+    if(getUserId())
     {
-        ret["users_id"]=getValueOfUsersId();
+        ret["user_id"]=getValueOfUserId();
     }
     else
     {
-        ret["users_id"]=Json::Value();
+        ret["user_id"]=Json::Value();
     }
     if(getVerificationCode())
     {
@@ -465,14 +465,14 @@ Json::Value UserVerification::toMasqueradedJson(
 
 bool UserVerification::validateJsonForCreation(const Json::Value &pJson, std::string &err)
 {
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
-        if(!validJsonOfField(0, "users_id", pJson["users_id"], err, true))
+        if(!validJsonOfField(0, "user_id", pJson["user_id"], err, true))
             return false;
     }
     else
     {
-        err="The users_id column cannot be null";
+        err="The user_id column cannot be null";
         return false;
     }
     if(pJson.isMember("verification_code"))
@@ -556,9 +556,9 @@ bool UserVerification::validateMasqueradedJsonForCreation(const Json::Value &pJs
 }
 bool UserVerification::validateJsonForUpdate(const Json::Value &pJson, std::string &err)
 {
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
-        if(!validJsonOfField(0, "users_id", pJson["users_id"], err, false))
+        if(!validJsonOfField(0, "user_id", pJson["user_id"], err, false))
             return false;
     }
     if(pJson.isMember("verification_code"))

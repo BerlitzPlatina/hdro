@@ -304,6 +304,52 @@ ENGINE = InnoDB;
 
 SHOW WARNINGS;
 
+ALTER TABLE user_verification 
+RENAME COLUMN users_id to user_id;
+
+ALTER TABLE user_verification 
+ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE user_contact  
+ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE user_contact  
+ADD FOREIGN KEY (contact_id) REFERENCES contacts(id);
+
+ALTER TABLE reports  
+RENAME COLUMN users_id to user_id;
+
+ALTER TABLE reports  
+ADD FOREIGN KEY (user_id) REFERENCES users(id);
+
+ALTER TABLE reports  
+RENAME COLUMN participants_id to participant_id;
+
+ALTER TABLE reports  
+ADD FOREIGN KEY (participant_id) REFERENCES participants(id);
+
+ALTER TABLE conversation  RENAME conversations;
+
+ALTER TABLE participants  
+ADD FOREIGN KEY (conversation_id) REFERENCES conversations(id);
+
+ALTER TABLE participants  
+RENAME COLUMN users_id to user_id;
+
+ALTER TABLE participants  
+ADD FOREIGN KEY (conversation_id) REFERENCES conversations(id);
+
+ALTER TABLE conversations  
+ADD FOREIGN KEY (creator_id) REFERENCES users(id);
+
+ALTER TABLE messages  
+ADD FOREIGN KEY (conversation_id) REFERENCES conversations(id);
+
+ALTER TABLE messages  
+ADD FOREIGN KEY (sender_id) REFERENCES users(id);
+
+
+
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

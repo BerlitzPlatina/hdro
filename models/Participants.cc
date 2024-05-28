@@ -15,7 +15,7 @@ using namespace drogon_model::dro;
 
 const std::string Participants::Cols::_id = "id";
 const std::string Participants::Cols::_conversation_id = "conversation_id";
-const std::string Participants::Cols::_users_id = "users_id";
+const std::string Participants::Cols::_user_id = "user_id";
 const std::string Participants::Cols::_type = "type";
 const std::string Participants::Cols::_created_at = "created_at";
 const std::string Participants::Cols::_updated_at = "updated_at";
@@ -26,7 +26,7 @@ const std::string Participants::tableName = "participants";
 const std::vector<typename Participants::MetaData> Participants::metaData_={
 {"id","int32_t","int",4,1,1,1},
 {"conversation_id","int32_t","int",4,0,0,1},
-{"users_id","int32_t","int",4,0,0,1},
+{"user_id","int32_t","int",4,0,0,1},
 {"type","std::string","enum('single','group')",0,0,0,1},
 {"created_at","::trantor::Date","datetime",0,0,0,1},
 {"updated_at","::trantor::Date","datetime",0,0,0,1}
@@ -48,9 +48,9 @@ Participants::Participants(const Row &r, const ssize_t indexOffset) noexcept
         {
             conversationId_=std::make_shared<int32_t>(r["conversation_id"].as<int32_t>());
         }
-        if(!r["users_id"].isNull())
+        if(!r["user_id"].isNull())
         {
-            usersId_=std::make_shared<int32_t>(r["users_id"].as<int32_t>());
+            userId_=std::make_shared<int32_t>(r["user_id"].as<int32_t>());
         }
         if(!r["type"].isNull())
         {
@@ -123,7 +123,7 @@ Participants::Participants(const Row &r, const ssize_t indexOffset) noexcept
         index = offset + 2;
         if(!r[index].isNull())
         {
-            usersId_=std::make_shared<int32_t>(r[index].as<int32_t>());
+            userId_=std::make_shared<int32_t>(r[index].as<int32_t>());
         }
         index = offset + 3;
         if(!r[index].isNull())
@@ -208,7 +208,7 @@ Participants::Participants(const Json::Value &pJson, const std::vector<std::stri
         dirtyFlag_[2] = true;
         if(!pJson[pMasqueradingVector[2]].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[2]].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[2]].asInt64());
         }
     }
     if(!pMasqueradingVector[3].empty() && pJson.isMember(pMasqueradingVector[3]))
@@ -291,12 +291,12 @@ Participants::Participants(const Json::Value &pJson) noexcept(false)
             conversationId_=std::make_shared<int32_t>((int32_t)pJson["conversation_id"].asInt64());
         }
     }
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
         dirtyFlag_[2]=true;
-        if(!pJson["users_id"].isNull())
+        if(!pJson["user_id"].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson["users_id"].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson["user_id"].asInt64());
         }
     }
     if(pJson.isMember("type"))
@@ -389,7 +389,7 @@ void Participants::updateByMasqueradedJson(const Json::Value &pJson,
         dirtyFlag_[2] = true;
         if(!pJson[pMasqueradingVector[2]].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[2]].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson[pMasqueradingVector[2]].asInt64());
         }
     }
     if(!pMasqueradingVector[3].empty() && pJson.isMember(pMasqueradingVector[3]))
@@ -471,12 +471,12 @@ void Participants::updateByJson(const Json::Value &pJson) noexcept(false)
             conversationId_=std::make_shared<int32_t>((int32_t)pJson["conversation_id"].asInt64());
         }
     }
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
         dirtyFlag_[2] = true;
-        if(!pJson["users_id"].isNull())
+        if(!pJson["user_id"].isNull())
         {
-            usersId_=std::make_shared<int32_t>((int32_t)pJson["users_id"].asInt64());
+            userId_=std::make_shared<int32_t>((int32_t)pJson["user_id"].asInt64());
         }
     }
     if(pJson.isMember("type"))
@@ -580,20 +580,20 @@ void Participants::setConversationId(const int32_t &pConversationId) noexcept
     dirtyFlag_[1] = true;
 }
 
-const int32_t &Participants::getValueOfUsersId() const noexcept
+const int32_t &Participants::getValueOfUserId() const noexcept
 {
     static const int32_t defaultValue = int32_t();
-    if(usersId_)
-        return *usersId_;
+    if(userId_)
+        return *userId_;
     return defaultValue;
 }
-const std::shared_ptr<int32_t> &Participants::getUsersId() const noexcept
+const std::shared_ptr<int32_t> &Participants::getUserId() const noexcept
 {
-    return usersId_;
+    return userId_;
 }
-void Participants::setUsersId(const int32_t &pUsersId) noexcept
+void Participants::setUserId(const int32_t &pUserId) noexcept
 {
-    usersId_ = std::make_shared<int32_t>(pUsersId);
+    userId_ = std::make_shared<int32_t>(pUserId);
     dirtyFlag_[2] = true;
 }
 
@@ -662,7 +662,7 @@ const std::vector<std::string> &Participants::insertColumns() noexcept
 {
     static const std::vector<std::string> inCols={
         "conversation_id",
-        "users_id",
+        "user_id",
         "type",
         "created_at",
         "updated_at"
@@ -685,9 +685,9 @@ void Participants::outputArgs(drogon::orm::internal::SqlBinder &binder) const
     }
     if(dirtyFlag_[2])
     {
-        if(getUsersId())
+        if(getUserId())
         {
-            binder << getValueOfUsersId();
+            binder << getValueOfUserId();
         }
         else
         {
@@ -770,9 +770,9 @@ void Participants::updateArgs(drogon::orm::internal::SqlBinder &binder) const
     }
     if(dirtyFlag_[2])
     {
-        if(getUsersId())
+        if(getUserId())
         {
-            binder << getValueOfUsersId();
+            binder << getValueOfUserId();
         }
         else
         {
@@ -832,13 +832,13 @@ Json::Value Participants::toJson() const
     {
         ret["conversation_id"]=Json::Value();
     }
-    if(getUsersId())
+    if(getUserId())
     {
-        ret["users_id"]=getValueOfUsersId();
+        ret["user_id"]=getValueOfUserId();
     }
     else
     {
-        ret["users_id"]=Json::Value();
+        ret["user_id"]=Json::Value();
     }
     if(getType())
     {
@@ -897,9 +897,9 @@ Json::Value Participants::toMasqueradedJson(
         }
         if(!pMasqueradingVector[2].empty())
         {
-            if(getUsersId())
+            if(getUserId())
             {
-                ret[pMasqueradingVector[2]]=getValueOfUsersId();
+                ret[pMasqueradingVector[2]]=getValueOfUserId();
             }
             else
             {
@@ -958,13 +958,13 @@ Json::Value Participants::toMasqueradedJson(
     {
         ret["conversation_id"]=Json::Value();
     }
-    if(getUsersId())
+    if(getUserId())
     {
-        ret["users_id"]=getValueOfUsersId();
+        ret["user_id"]=getValueOfUserId();
     }
     else
     {
-        ret["users_id"]=Json::Value();
+        ret["user_id"]=Json::Value();
     }
     if(getType())
     {
@@ -1010,14 +1010,14 @@ bool Participants::validateJsonForCreation(const Json::Value &pJson, std::string
         err="The conversation_id column cannot be null";
         return false;
     }
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
-        if(!validJsonOfField(2, "users_id", pJson["users_id"], err, true))
+        if(!validJsonOfField(2, "user_id", pJson["user_id"], err, true))
             return false;
     }
     else
     {
-        err="The users_id column cannot be null";
+        err="The user_id column cannot be null";
         return false;
     }
     if(pJson.isMember("type"))
@@ -1160,9 +1160,9 @@ bool Participants::validateJsonForUpdate(const Json::Value &pJson, std::string &
         if(!validJsonOfField(1, "conversation_id", pJson["conversation_id"], err, false))
             return false;
     }
-    if(pJson.isMember("users_id"))
+    if(pJson.isMember("user_id"))
     {
-        if(!validJsonOfField(2, "users_id", pJson["users_id"], err, false))
+        if(!validJsonOfField(2, "user_id", pJson["user_id"], err, false))
             return false;
     }
     if(pJson.isMember("type"))

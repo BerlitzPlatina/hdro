@@ -45,8 +45,8 @@ class Reports
     struct Cols
     {
         static const std::string _id;
-        static const std::string _users_id;
-        static const std::string _participants_id;
+        static const std::string _user_id;
+        static const std::string _participant_id;
         static const std::string _report_type;
         static const std::string _notes;
         static const std::string _status;
@@ -110,21 +110,21 @@ class Reports
     ///Set the value of the column id
     void setId(const int32_t &pId) noexcept;
 
-    /**  For column users_id  */
-    ///Get the value of the column users_id, returns the default value if the column is null
-    const int32_t &getValueOfUsersId() const noexcept;
+    /**  For column user_id  */
+    ///Get the value of the column user_id, returns the default value if the column is null
+    const int32_t &getValueOfUserId() const noexcept;
     ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
-    const std::shared_ptr<int32_t> &getUsersId() const noexcept;
-    ///Set the value of the column users_id
-    void setUsersId(const int32_t &pUsersId) noexcept;
+    const std::shared_ptr<int32_t> &getUserId() const noexcept;
+    ///Set the value of the column user_id
+    void setUserId(const int32_t &pUserId) noexcept;
 
-    /**  For column participants_id  */
-    ///Get the value of the column participants_id, returns the default value if the column is null
-    const int32_t &getValueOfParticipantsId() const noexcept;
+    /**  For column participant_id  */
+    ///Get the value of the column participant_id, returns the default value if the column is null
+    const int32_t &getValueOfParticipantId() const noexcept;
     ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
-    const std::shared_ptr<int32_t> &getParticipantsId() const noexcept;
-    ///Set the value of the column participants_id
-    void setParticipantsId(const int32_t &pParticipantsId) noexcept;
+    const std::shared_ptr<int32_t> &getParticipantId() const noexcept;
+    ///Set the value of the column participant_id
+    void setParticipantId(const int32_t &pParticipantId) noexcept;
 
     /**  For column report_type  */
     ///Get the value of the column report_type, returns the default value if the column is null
@@ -184,8 +184,8 @@ class Reports
     ///For mysql or sqlite3
     void updateId(const uint64_t id);
     std::shared_ptr<int32_t> id_;
-    std::shared_ptr<int32_t> usersId_;
-    std::shared_ptr<int32_t> participantsId_;
+    std::shared_ptr<int32_t> userId_;
+    std::shared_ptr<int32_t> participantId_;
     std::shared_ptr<std::string> reportType_;
     std::shared_ptr<std::string> notes_;
     std::shared_ptr<std::string> status_;
@@ -223,12 +223,12 @@ class Reports
             ++parametersCount;
         if(dirtyFlag_[1])
         {
-            sql += "users_id,";
+            sql += "user_id,";
             ++parametersCount;
         }
         if(dirtyFlag_[2])
         {
-            sql += "participants_id,";
+            sql += "participant_id,";
             ++parametersCount;
         }
         if(dirtyFlag_[3])

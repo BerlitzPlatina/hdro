@@ -44,7 +44,7 @@ class UserVerification
   public:
     struct Cols
     {
-        static const std::string _users_id;
+        static const std::string _user_id;
         static const std::string _verification_code;
         static const std::string _created_at;
     };
@@ -98,13 +98,13 @@ class UserVerification
                           std::string &err,
                           bool isForCreation);
 
-    /**  For column users_id  */
-    ///Get the value of the column users_id, returns the default value if the column is null
-    const int32_t &getValueOfUsersId() const noexcept;
+    /**  For column user_id  */
+    ///Get the value of the column user_id, returns the default value if the column is null
+    const int32_t &getValueOfUserId() const noexcept;
     ///Return a shared_ptr object pointing to the column const value, or an empty shared_ptr object if the column is null
-    const std::shared_ptr<int32_t> &getUsersId() const noexcept;
-    ///Set the value of the column users_id
-    void setUsersId(const int32_t &pUsersId) noexcept;
+    const std::shared_ptr<int32_t> &getUserId() const noexcept;
+    ///Set the value of the column user_id
+    void setUserId(const int32_t &pUserId) noexcept;
 
     /**  For column verification_code  */
     ///Get the value of the column verification_code, returns the default value if the column is null
@@ -146,7 +146,7 @@ class UserVerification
     void updateArgs(drogon::orm::internal::SqlBinder &binder) const;
     ///For mysql or sqlite3
     void updateId(const uint64_t id);
-    std::shared_ptr<int32_t> usersId_;
+    std::shared_ptr<int32_t> userId_;
     std::shared_ptr<std::string> verificationCode_;
     std::shared_ptr<std::string> createdAt_;
     struct MetaData
@@ -180,7 +180,7 @@ class UserVerification
         needSelection = false;
         if(dirtyFlag_[0])
         {
-            sql += "users_id,";
+            sql += "user_id,";
             ++parametersCount;
         }
         if(dirtyFlag_[1])
