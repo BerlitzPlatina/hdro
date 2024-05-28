@@ -35,6 +35,8 @@ void WebSocketChat::handleNewConnection(const HttpRequestPtr &req, const WebSock
     conn->send("haha!!!");
     Subscriber s;
     s.chatRoomName_ = req->getParameter("room_name");
+    LOG_DEBUG << "new websocket connection!" << s.chatRoomName_;
+
     s.id_ = chatRooms_.subscribe(s.chatRoomName_, [conn](const std::string &topic, const std::string &message) {
         // Supress unused variable warning
         (void)topic;
