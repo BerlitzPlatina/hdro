@@ -38,7 +38,7 @@
     "db_clients": [
         /* {
             //name: Name of the client,'default' by default
-            "name": "",
+            "name": "default",
             //rdbms: Server type, postgresql,mysql or sqlite3, "postgresql" by default
             "rdbms": "postgresql",
             //filename: Sqlite3 db file name
