@@ -40,7 +40,7 @@ class UserController : public drogon::HttpController<UserController>
                    std::string &&id);
     void deleteOne(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback,
                    std::string &&id);
-    void get(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback, Users &&pNewUser);
+    void get(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback);
     void create(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback);
 
     //    void update(const HttpRequestPtr &req,
