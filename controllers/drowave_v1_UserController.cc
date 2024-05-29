@@ -9,7 +9,8 @@
 #include <string>
 
 using namespace drowave::v1;
-
+using namespace drogon;
+using namespace drogon::orm;
 void UserController::getOne(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback,
                             std::string &&id)
 {
@@ -18,6 +19,14 @@ void UserController::getOne(const HttpRequestPtr &req, std::function<void(const 
 void UserController::get(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback,
                          Users &&pNewUser)
 {
+    auto dbClientPtr = drogon::app().getDbClient();
+    Mapper<Users> mp(dbClientPtr);
+    std::vector<Users> uu = mp.orderBy(Users::Cols::_id).limit(20).offset(0).findAll();
+    int i = 0;
+    for (auto row : uu)
+    {
+        std::cout << i++ << ": user name is " << *row.getId() << std::endl;
+    }
     // auto newUser = pNewUser;
     Json::Value ret;
     ret["result"] = "ok";
