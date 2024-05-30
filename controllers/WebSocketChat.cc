@@ -2,7 +2,7 @@
 
 struct Subscriber
 {
-    std::string chatRoomName_;
+    std::string conversationId;
     drogon::SubscriberID id_;
 };
 
@@ -11,14 +11,16 @@ void WebSocketChat::handleNewMessage(const WebSocketConnectionPtr &wsConnPtr, st
 {
     // write your application logic here
     LOG_DEBUG << "new websocket message:" << message;
+
     if (type == WebSocketMessageType::Ping)
     {
         LOG_DEBUG << "recv a ping";
     }
     else if (type == WebSocketMessageType::Text)
     {
+        // create message
         auto &s = wsConnPtr->getContextRef<Subscriber>();
-        chatRooms_.publish(s.chatRoomName_, ("Server: " + message));
+        chatRooms_.publish(s.conversationId, ("Server: " + message));
     }
 }
 
@@ -26,7 +28,7 @@ void WebSocketChat::handleConnectionClosed(const WebSocketConnectionPtr &conn)
 {
     this->test();
     auto &s = conn->getContextRef<Subscriber>();
-    chatRooms_.unsubscribe(s.chatRoomName_, s.id_);
+    chatRooms_.unsubscribe(s.conversationId, s.id_);
 }
 
 void WebSocketChat::test()
@@ -39,10 +41,10 @@ void WebSocketChat::handleNewConnection(const HttpRequestPtr &req, const WebSock
     LOG_DEBUG << "new websocket connection!";
     conn->send("haha!!!");
     Subscriber s;
-    s.chatRoomName_ = req->getParameter("room_name");
-    LOG_DEBUG << "new websocket connection!" << s.chatRoomName_;
+    s.conversationId = req->getParameter("conversation_id");
+    LOG_DEBUG << "new websocket connection!" << s.conversationId;
 
-    s.id_ = chatRooms_.subscribe(s.chatRoomName_, [conn](const std::string &topic, const std::string &message) {
+    s.id_ = chatRooms_.subscribe(s.conversationId, [conn](const std::string &topic, const std::string &message) {
         // Supress unused variable warning
         (void)topic;
         conn->send(message);

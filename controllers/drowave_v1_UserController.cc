@@ -14,8 +14,8 @@ using namespace drogon::orm;
 
 void UserController::get(const HttpRequestPtr &req, std::function<void(const HttpResponsePtr &)> &&callback)
 {
-    auto dbClientPtr = drogon::app().getDbClient();
-    Mapper<Users> mp(dbClientPtr);
+    // auto dbClientPtr = drogon::app().getDbClient();
+    Mapper<Users> mp(drogon::app().getDbClient());
     std::vector<Users> uu = mp.limit(20).offset(0).findAll();
     int i = 0;
     for (auto row : uu)
